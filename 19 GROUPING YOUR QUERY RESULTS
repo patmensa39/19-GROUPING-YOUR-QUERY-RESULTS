@@ -1,0 +1,84 @@
+/*19 GROUPING YOUR QUERY RESULTS  
+
+FILTERING WITH A GROUPED CONDITION IN SQL
+Created by Patrick Mensah 
+Date Created: 04/13/2023
+Description:  Grouping in SQL \ What are the average invoice total by city?
+*/
+
+SELECT 
+    BillingCity,
+    ROUND(AVG(Total),2) AS 'Average Total'
+FROM 
+    Invoice
+GROUP BY 
+    BillingCity
+ORDER BY
+    BillingCity
+ 
+
+--GROUPING WITH THE WHERE CLAUSE    
+--Assuming management want to find average invoice total by city for only the cities that starts with L 
+SELECT 
+        BillingCity,
+        ROUND(AVG(Total),2) AS 'Average Total'
+FROM 
+    Invoice
+WHERE 
+BillingCity LIKE 'L%'
+GROUP BY 
+        BillingCity
+ORDER BY
+    BillingCity
+    
+
+--GROUPING WITH THE HAVING CLAUSE
+--Assuming management want to find average invoice total greater than $6.00
+--One thing to note is that the having clause always comes after the group by 
+-- The WHERE clause is for filtering non aggregate data and the HAVING is for filtering results that contain aggregates
+SELECT 
+        BillingCity,
+        ROUND(AVG(Total),2) AS 'Average Total'
+FROM 
+    Invoice
+GROUP BY 
+        BillingCity
+HAVING
+    AVG(Total)>6
+ORDER BY
+    BillingCity
+
+
+
+--GROUPING WITH THE WHERE AND HAVING CLAUSE 
+--Assuming management want to find average invoice total greater than $6.00 for cities starting with B
+SELECT 
+        BillingCity,
+        ROUND(AVG(Total),2) AS 'Average Total'
+FROM 
+    Invoice
+WHERE 
+    BillingCity LIKE 'B%'
+GROUP BY 
+        BillingCity
+HAVING
+    AVG(Total)>5
+ORDER BY
+    BillingCity
+    
+
+
+--GROUPING BY MANY FIELDS
+--Assuming management want to find average invoice total by billing city and billing country 
+SELECT 
+    BillingCountry,
+    BillingCity,
+    ROUND(AVG(Total),2) AS 'Average Total'
+FROM
+        Invoice
+GROUP BY 
+    BillingCountry,
+    BillingCity
+ORDER BY 
+    BillingCountry
+
